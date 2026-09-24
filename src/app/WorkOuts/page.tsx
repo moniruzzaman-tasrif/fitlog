@@ -13,7 +13,7 @@ const dataPromis = async (): Promise<IRootDataType[]> => {
 
 const HomePageData =async () => {
 const fetchData = await dataPromis();
-
+console.log(fetchData.length);
 
   return (
     <div>

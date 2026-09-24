@@ -24,7 +24,7 @@ const Navber = () => {
           // className=" bg-[#1A2312] rounded-4xl px-6 text-[#C2F800]"
           onClick={() => handerClick("Workouts")}
           className={` px-6 ${ChaneColor ? "text-gray-500" : `bg-[#1A2312] rounded-4xl text-[#C2F800]`}`}
-          href="/"
+          href="/WorkOuts"
         >
           Workouts
         </Link>
@@ -32,7 +32,7 @@ const Navber = () => {
       <li>
         {" "}
         <Link
-          href="/"
+          href="/myPlan"
           onClick={() => handerClick("MyPlan")}
           className={` px-6 ${
             ChaneColor
@@ -75,9 +75,11 @@ const Navber = () => {
               {NavLink}
             </ul>
           </div>
-          <div className=" flex items-center gap-4">
-            <Image src={Logo} alt=""></Image>
-            <a className="  text-xl text-white">FITLOG</a>
+          <div>
+            <Link href="/" className=" flex items-center gap-4">
+              <Image src={Logo} alt=""></Image>
+              <span className="  text-xl text-white">FITLOG</span>
+            </Link>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
