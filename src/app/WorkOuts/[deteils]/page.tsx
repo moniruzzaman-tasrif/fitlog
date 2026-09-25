@@ -1,5 +1,7 @@
+import DeteilsButton from "@/component/siteShare/DeteilsButton";
 import { IRootDataType } from "@/DataType";
 import Image from "next/image";
+import { useContext } from "react";
 import { FiBookmark, FiCalendar } from "react-icons/fi";
 
 interface paramsType {
@@ -7,6 +9,7 @@ interface paramsType {
 }
 
 const page = async ({ params }: paramsType) => {
+
   const { deteils } = await params;
 
   const datafetch = async (): Promise<IRootDataType> => {
@@ -16,9 +19,12 @@ const page = async ({ params }: paramsType) => {
     const data = await res.json();
     return data;
   };
-
   const data = await datafetch();
   const dataArr: IRootDataType[] = [data];
+
+
+
+
   return (
     <div className="">
       {dataArr.map((item: IRootDataType) => (
@@ -128,25 +134,18 @@ const page = async ({ params }: paramsType) => {
                         <li key={index} className="leading-relaxed">
                           <span className="font-bold text-[#626262] mr-2">
                             {index + 1}.
-                          </span>  
+                          </span>
                           {step}
                         </li>
                       ))}
                     </ol>
                   </div>
                 </div>
-
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-                  <button className="btn bg-[#ccff00] hover:bg-[#b3e600] text-black font-bold border-0 w-full sm:flex-1 rounded-xl flex items-center justify-center gap-2">
-                    <FiCalendar className="w-4 h-4" />
-                    Add to today&apos;s plan
-                  </button>
-                  <button className="btn bg-[#1a1f2c] hover:bg-[#222838] text-white border border-gray-700 w-full sm:w-auto px-6 rounded-xl flex items-center justify-center gap-2">
-                    <FiBookmark className="w-4 h-4" />
-                    Save for later
-                  </button>
-                </div>
+                <DeteilsButton
+                  deteilsData={item}
+                  itemData={dataArr}
+                ></DeteilsButton>
               </div>
             </div>
           </div>

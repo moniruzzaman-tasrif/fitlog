@@ -1,14 +1,24 @@
 "use client";
 
+import PlanData from "@/component/siteShare/planData";
+import SaveData from "@/component/siteShare/saveData";
+import { dataContext } from "@/context";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaFireAlt } from "react-icons/fa";
 import { FiActivity, FiClock,  FiArrowRight } from "react-icons/fi";
+
 
 export default function MyPlanDashboard() {
   // Active tab state ("todays-plan" or "saved")
   const [activeTab, setActiveTab] = useState<"todays-plan" | "saved">("saved");
 
+
+  const contextData=useContext(dataContext)
+  if(!contextData)return null
+  const { plan } = contextData;
+  const { save } = contextData;
+  console.log(plan.length)
   // Mock server statistics values (Replace these with your fetched data)
   const stats = {
     exercises: 2,
@@ -100,34 +110,46 @@ export default function MyPlanDashboard() {
         </div>
 
         {/* Content Box Area (Empty State or Mapped List Container) */}
-        <div className="bg-[#151922]/50 border border-dashed border-gray-800 rounded-3xl p-10 md:p-16 flex flex-col items-center justify-center text-center">
+        <div className="bg-[#151922]/50 border border-dashed border-gray-800 rounded-3xl p-10 md:p-5 flex flex-col items-center justify-center text-center">
           {activeTab === "saved" ? (
-            <div className="space-y-4 max-w-md">
-              <h3 className="text-xl font-black uppercase tracking-wide text-white">
-                Nothing Here Yet
-              </h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Browse the library and add a lift to get today moving.
-              </p>
-              <div className="pt-2">
-                <Link
-                  href="/workouts"
-                  className="btn bg-[#ccff00] hover:bg-[#b3e600] text-black font-extrabold border-0 px-8 rounded-xl shadow-lg flex items-center justify-center gap-2 mx-auto"
-                >
-                  Go to workouts
-                  <FiArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+            <div className="space-y-4 w-full">
+              {save.length === 0 ? (
+                <div className="">
+                  <h3 className="text-xl font-black uppercase tracking-wide text-white">
+                    Nothing Here Yet
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    Browse the library and add a lift to get today moving.
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href="/workouts"
+                      className="btn bg-[#ccff00] hover:bg-[#b3e600] text-black font-extrabold border-0 px-8 rounded-xl shadow-lg flex items-center justify-center gap-2 mx-auto"
+                    >
+                      Go to workouts
+                      <FiArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <SaveData></SaveData>
+              )}
             </div>
           ) : (
-            <div className="space-y-4 max-w-md">
-              <h3 className="text-xl font-black uppercase tracking-wide text-white">
-                No Workouts Planned For Today
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Select exercises from your saved list to populate today's
-                routine.
-              </p>
+            <div className=" w-full ">
+              {plan.length === 0 ? (
+                <div>
+                  <h3 className="text-xl font-black uppercase tracking-wide text-white">
+                    No Workouts Planned For Today
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    Select exercises from your saved list to populate today's
+                    routine.
+                  </p>
+                </div>
+              ) : (
+                <PlanData></PlanData>
+              )}
             </div>
           )}
         </div>

@@ -1,7 +1,6 @@
 import { IRootDataType } from '@/DataType';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import { FaRegStar } from 'react-icons/fa';
 import { HiOutlineClock } from 'react-icons/hi';
 import { SlFire } from 'react-icons/sl';

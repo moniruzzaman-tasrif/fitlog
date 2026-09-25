@@ -9,17 +9,22 @@ interface DataType {
   setSave: React.Dispatch<React.SetStateAction<IRootDataType[]>>;
 }
 
-const dataContext = createContext<DataType | null>(null);
+export const dataContext = createContext<DataType | null>(null);
 
-const Context = ({ children }: { children: React.ReactNode }) => {
-  const [plan, setPlan] = useState<unknown[]>([]);
-  const [save, setSave] = useState<unknown[]>([]);
+const ProviderContext = ({ children }: { children: React.ReactNode }) => {
+  const [plan, setPlan] = useState<IRootDataType[]>([]);
+  const [save, setSave] = useState<IRootDataType[]>([]);
+
+  const ContextShare = {
+    plan,
+    setPlan,
+    save,
+    setSave,
+  };
 
   return (
-    <dataContext.Provider value={{ plan, setPlan, save, setSave }}>
-      {children}
-    </dataContext.Provider>
+    <dataContext.Provider value={ContextShare}>{children}</dataContext.Provider>
   );
 };
 
-export default Context;
+export default ProviderContext;
