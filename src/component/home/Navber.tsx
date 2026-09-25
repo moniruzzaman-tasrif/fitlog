@@ -2,24 +2,27 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Logo from"../../assets/logo.png"
+import { dataContext } from '@/context';
 
 const Navber = () => {
-
+const NavContext=useContext(dataContext)
   const [ChaneColor,setChaneColor]=useState(false)
-
+  if (!NavContext) return null;
   const handerClick=(dataget:string)=>{
     if (dataget === "MyPlan"){setChaneColor(true)}else if (dataget === "Workouts") {
       setChaneColor(false);
     }
-
   }
+const { plan, save } = NavContext;
 
   const NavLink = (
     <>
+    
       <li>
         {" "}
+
         <Link
           // className=" bg-[#1A2312] rounded-4xl px-6 text-[#C2F800]"
           onClick={() => handerClick("Workouts")}
@@ -86,17 +89,17 @@ const Navber = () => {
           <ul className="menu menu-horizontal px-1">{NavLink}</ul>
         </div>
         <div className="navbar-end flex gap-7">
-          <Link href="/" className=" text-gray-300 flex gap-3">
+          <Link href="/myPlan" className=" text-gray-300 flex gap-3">
             {" "}
             <span>Plan</span>
             <span className=" px-2 rounded-4xl flex justify-center items-center text-black bg-[#C2F800]">
               {" "}
-              0
+              {plan.length}
             </span>
           </Link>
-          <Link href="/" className="text-gray-500 flex gap-2  ">
+          <Link href="/myPlan" className="text-gray-500 flex gap-2  ">
             Saved
-            <span className="border px-2 text-white  rounded-4xl">0</span>
+            <span className="border px-2 text-white  rounded-4xl">{save.length}</span>
           </Link>
         </div>
       </div>

@@ -6,25 +6,19 @@ import { dataContext } from "@/context";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { FaFireAlt } from "react-icons/fa";
-import { FiActivity, FiClock,  FiArrowRight } from "react-icons/fi";
-
+import { FiActivity, FiArrowRight, FiClock } from "react-icons/fi";
 
 export default function MyPlanDashboard() {
   // Active tab state ("todays-plan" or "saved")
   const [activeTab, setActiveTab] = useState<"todays-plan" | "saved">("saved");
 
-
-  const contextData=useContext(dataContext)
-  if(!contextData)return null
+  const contextData = useContext(dataContext);
+  if (!contextData) return null;
   const { plan } = contextData;
   const { save } = contextData;
-  console.log(plan.length)
-  // Mock server statistics values (Replace these with your fetched data)
-  const stats = {
-    exercises: 2,
-    minutes: 23,
-    calories: 190,
-  };
+
+  // Check if current active tab has items
+  const hasItems = activeTab === "saved" ? save.length > 0 : plan.length > 0;
 
   return (
     <div className="min-h-screen bg-[#0b0e14] text-white p-4 md:p-8 lg:p-12">
@@ -47,7 +41,7 @@ export default function MyPlanDashboard() {
               <FiActivity className="text-[#ccff00]" /> Exercises
             </span>
             <span className="text-3xl md:text-4xl font-black text-[#ccff00] mt-3">
-              {stats.exercises}
+              {plan.length}
             </span>
           </div>
 
@@ -57,7 +51,7 @@ export default function MyPlanDashboard() {
               <FiClock className="text-gray-400" /> Minutes
             </span>
             <span className="text-3xl md:text-4xl font-black text-white mt-3">
-              {stats.minutes}
+              {plan.reduce((acc, ind) => acc + ind.duration, 0)}
             </span>
           </div>
 
@@ -67,7 +61,7 @@ export default function MyPlanDashboard() {
               <FaFireAlt className="text-gray-400" /> Calories
             </span>
             <span className="text-3xl md:text-4xl font-black text-white mt-3">
-              {stats.calories}
+              {plan.reduce((acc, ind) => acc + ind.caloriesBurned, 0)}
             </span>
           </div>
         </div>
@@ -80,17 +74,17 @@ export default function MyPlanDashboard() {
               onClick={() => setActiveTab("todays-plan")}
               className={`px-5 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === "todays-plan"
-                  ? "bg-[#ccff00] text-black shadow-md"
+                  ? "bg-[#1F242D] text-white shadow-md"
                   : "text-gray-400 hover:text-white"
               }`}
             >
-              Today's Plan
+              Today&apos;s Plan
             </button>
             <button
               onClick={() => setActiveTab("saved")}
               className={`px-5 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === "saved"
-                  ? "bg-[#ccff00] text-black shadow-md"
+                  ? "bg-[#1F242D] text-white shadow-md"
                   : "text-gray-400 hover:text-white"
               }`}
             >
@@ -99,8 +93,8 @@ export default function MyPlanDashboard() {
           </div>
 
           {/* Sort By Dropdown using DaisyUI */}
-          <div className="flex items-center gap-2 text-sm text-gray-400">
-            <span>Sort By</span>
+          <div className="flex items-center gap-5 text-sm text-gray-400">
+            <span className="w-25">Sort By</span>
             <select className="select select-bordered bg-[#151922] text-white border-gray-800 text-xs rounded-xl focus:outline-none">
               <option>Duration</option>
               <option>Calories</option>
@@ -109,22 +103,28 @@ export default function MyPlanDashboard() {
           </div>
         </div>
 
-        {/* Content Box Area (Empty State or Mapped List Container) */}
-        <div className="bg-[#151922]/50 border border-dashed border-gray-800 rounded-3xl p-10 md:p-5 flex flex-col items-center justify-center text-center">
+        {/* Content Box Area: Conditional styling dynamically drops fixed heights/borders when cards populate */}
+        <div
+          className={`w-full transition-all ${
+            hasItems
+              ? "bg-transparent border-none p-0 space-y-4"
+              : "bg-[#151922]/50 border border-dashed border-gray-800 rounded-3xl p-10 flex flex-col items-center justify-center text-center h-80"
+          }`}
+        >
           {activeTab === "saved" ? (
             <div className="space-y-4 w-full">
               {save.length === 0 ? (
-                <div className="">
+                <div>
                   <h3 className="text-xl font-black uppercase tracking-wide text-white">
                     Nothing Here Yet
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className="text-gray-400 text-sm leading-relaxed mt-1">
                     Browse the library and add a lift to get today moving.
                   </p>
-                  <div className="pt-2">
+                  <div className="pt-3">
                     <Link
-                      href="/workouts"
-                      className="btn bg-[#ccff00] hover:bg-[#b3e600] text-black font-extrabold border-0 px-8 rounded-xl shadow-lg flex items-center justify-center gap-2 mx-auto"
+                      href="/WorkOuts"
+                      className="btn bg-[#ccff00] hover:bg-[#b3e600] w-auto text-black font-extrabold border-0 px-8 rounded-xl shadow-lg inline-flex items-center justify-center gap-2"
                     >
                       Go to workouts
                       <FiArrowRight className="w-4 h-4" />
@@ -132,23 +132,23 @@ export default function MyPlanDashboard() {
                   </div>
                 </div>
               ) : (
-                <SaveData></SaveData>
+                <SaveData />
               )}
             </div>
           ) : (
-            <div className=" w-full ">
+            <div className="w-full space-y-4">
               {plan.length === 0 ? (
-                <div>
+                <div className="text-center">
                   <h3 className="text-xl font-black uppercase tracking-wide text-white">
                     No Workouts Planned For Today
                   </h3>
-                  <p className="text-gray-400 text-sm">
-                    Select exercises from your saved list to populate today's
-                    routine.
+                  <p className="text-gray-400 text-sm mt-1">
+                    Select exercises from your saved list to populate
+                    today&apos;s routine.
                   </p>
                 </div>
               ) : (
-                <PlanData></PlanData>
+                <PlanData />
               )}
             </div>
           )}

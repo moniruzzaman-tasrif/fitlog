@@ -7,16 +7,16 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { FaFire, FaRegStar } from "react-icons/fa";
 import { IoClose, IoTimeOutline } from "react-icons/io5";
 
-interface dataType {
-  plan: IRootDataType[];
-}
-
 const PlanData = () => {
   const contextData = useContext(dataContext);
-
   if (!contextData) return null;
-
-  const { plan } = contextData;
+  const { plan, setPlan } = contextData;
+  const remove = (planData: IRootDataType) => {
+    const filteerItem = plan.filter(
+      (item: IRootDataType) => item.id !== planData.id
+    );
+    setPlan(filteerItem);
+  };
 
   return (
     <div className=" flex flex-col gap-4">
@@ -63,7 +63,11 @@ const PlanData = () => {
                 <AiOutlineCheck className="font-bold" />
                 Mark as Done
               </button>
-              <button className="btn  bg-[#14171E] text-gray-400 shadow-none border-none text-2xl">
+
+              <button
+                onClick={() => remove(item)}
+                className="btn  bg-[#14171E] text-gray-400 shadow-none border-none text-2xl"
+              >
                 <IoClose />
               </button>
             </div>

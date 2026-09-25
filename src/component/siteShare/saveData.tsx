@@ -3,20 +3,23 @@ import { IRootDataType } from "@/DataType";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
-import { AiOutlineCheck } from "react-icons/ai";
+
 import { FaFire, FaRegStar } from "react-icons/fa";
 import { IoClose, IoTimeOutline } from "react-icons/io5";
-
-interface dataType {
-  plan: IRootDataType[];
-}
 
 const SaveData = () => {
   const contextData = useContext(dataContext);
 
   if (!contextData) return null;
 
-  const { save } = contextData;
+  const { save, setSave } = contextData;
+
+  const remove = (SaveData: IRootDataType) => {
+    const filteerItem = save.filter(
+      (item: IRootDataType) => item.id !== SaveData.id,
+    );
+    setSave(filteerItem);
+  };
 
   return (
     <div className=" flex flex-col gap-4">
@@ -60,7 +63,10 @@ const SaveData = () => {
                 </button>
               </Link>
 
-              <button className="btn  bg-[#14171E] text-gray-400 shadow-none border-none text-2xl">
+              <button
+                onClick={()=>remove(item)}
+                className="btn  bg-[#14171E] text-gray-400 shadow-none border-none text-2xl"
+              >
                 <IoClose />
               </button>
             </div>

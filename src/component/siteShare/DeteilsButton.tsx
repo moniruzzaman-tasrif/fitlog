@@ -6,15 +6,15 @@ import React, { useContext } from "react";
 import { FiBookmark, FiCalendar } from "react-icons/fi";
 import { Bounce, toast } from "react-toastify";
 interface buttendataType {
-  deteilsData: IRootDataType;
-  plan: IRootDataType[];
-  setPlan: React.Dispatch<React.SetStateAction<IRootDataType[]>>;
-  save: IRootDataType[];
-  setSave: React.Dispatch<React.SetStateAction<IRootDataType[]>>;
-  // itemData: IRootDataType[];
+  deteilsData: IRootDataType,
+  plan: IRootDataType[],
+  setPlan: React.Dispatch<React.SetStateAction<IRootDataType[]>>,
+  save: IRootDataType[],
+  setSave: React.Dispatch<React.SetStateAction<IRootDataType[]>>,
+
 }
 
-const DeteilsButton = ({ deteilsData }: buttendataType) => {
+const DeteilsButton = ({ deteilsData }:buttendataType) => {
   const Context = useContext(dataContext);
 
   if (!Context) {
@@ -86,6 +86,8 @@ setPlan([...plan, deteilsData]);
     });
     }
   };
+
+
   // console.log(plan);
   return (
     <div>
