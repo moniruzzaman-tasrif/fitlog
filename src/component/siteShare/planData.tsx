@@ -6,16 +6,29 @@ import { useContext } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { FaFire, FaRegStar } from "react-icons/fa";
 import { IoClose, IoTimeOutline } from "react-icons/io5";
+import { Bounce, toast } from "react-toastify";
 
 const PlanData = ({ planProps }: { planProps: IRootDataType[] }) => {
   const contextData = useContext(dataContext);
   if (!contextData) return null;
   const { plan, setPlan } = contextData;
+
   const remove = (planData: IRootDataType) => {
     const filteerItem = plan.filter(
       (item: IRootDataType) => item.id !== planData.id,
     );
     setPlan(filteerItem);
+    toast.error("Remove Saved Plan!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   };
 
   return (
