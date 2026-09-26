@@ -9,15 +9,46 @@ import { FaFireAlt } from "react-icons/fa";
 import { FiActivity, FiArrowRight, FiClock } from "react-icons/fi";
 
 export default function MyPlanDashboard() {
-  // Active tab state ("todays-plan" or "saved")
-  const [activeTab, setActiveTab] = useState<"todays-plan" | "saved">("saved");
 
+  const [activeTab, setActiveTab] = useState<"todays-plan" | "saved">("saved");
+const [shorby, setshortby] = useState<"Duration" | "Calories" | "Rating">(
+  "Duration",
+);
   const contextData = useContext(dataContext);
   if (!contextData) return null;
   const { plan } = contextData;
   const { save } = contextData;
 
-  // Check if current active tab has items
+  console.log(shorby);
+
+const shortplan=()=>{
+  const planshortData = [...plan];
+  if(shorby==="Duration"){
+    planshortData.sort((a,b)=>b.duration-a.duration)
+  }else if ((shorby === "Calories")) {
+       planshortData.sort((a, b) => b.caloriesBurned - a.caloriesBurned);
+  }else if(shorby==="Rating"){
+     planshortData.sort((a, b) => b.rating - a.rating);
+  }
+  return planshortData;
+}
+
+const shortsave = () => {
+  const saveshortData = [...save];
+  if (shorby === "Duration") {
+    saveshortData.sort((a, b) => b.duration - a.duration);
+  } else if (shorby === "Calories") {
+    saveshortData.sort((a, b) => b.caloriesBurned - a.caloriesBurned);
+  } else if (shorby === "Rating") {
+    saveshortData.sort((a, b) => b.rating - a.rating);
+  }
+  return saveshortData;
+};
+
+const planData = shortplan();
+const saveData = shortsave();
+console.log(planData);
+
   const hasItems = activeTab === "saved" ? save.length > 0 : plan.length > 0;
 
   return (
@@ -95,7 +126,14 @@ export default function MyPlanDashboard() {
           {/* Sort By Dropdown using DaisyUI */}
           <div className="flex items-center gap-5 text-sm text-gray-400">
             <span className="w-25">Sort By</span>
-            <select className="select select-bordered bg-[#151922] text-white border-gray-800 text-xs rounded-xl focus:outline-none">
+
+            <select
+              value={shorby}
+              onChange={e =>
+                setshortby(e.target.value as "Duration" | "Calories" | "Rating")
+              }
+              className="select select-bordered bg-[#151922] text-white border-gray-800 text-xs rounded-xl focus:outline-none"
+            >
               <option>Duration</option>
               <option>Calories</option>
               <option>Rating</option>
@@ -132,7 +170,7 @@ export default function MyPlanDashboard() {
                   </div>
                 </div>
               ) : (
-                <SaveData />
+                <SaveData saveProps={saveData} />
               )}
             </div>
           ) : (
@@ -148,7 +186,7 @@ export default function MyPlanDashboard() {
                   </p>
                 </div>
               ) : (
-                <PlanData />
+                <PlanData planProps={planData} />
               )}
             </div>
           )}

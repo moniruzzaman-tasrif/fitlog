@@ -7,20 +7,20 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { FaFire, FaRegStar } from "react-icons/fa";
 import { IoClose, IoTimeOutline } from "react-icons/io5";
 
-const PlanData = () => {
+const PlanData = ({ planProps }: { planProps:IRootDataType[]}) => {
   const contextData = useContext(dataContext);
   if (!contextData) return null;
   const { plan, setPlan } = contextData;
   const remove = (planData: IRootDataType) => {
     const filteerItem = plan.filter(
-      (item: IRootDataType) => item.id !== planData.id
+      (item: IRootDataType) => item.id !== planData.id,
     );
     setPlan(filteerItem);
   };
 
   return (
     <div className=" flex flex-col gap-4">
-      {plan.map(item => (
+      {planProps.map(item => (
         <div className="" key={item.id}>
           <div className="card card-side  flex gap-4 items-center bg-[#14171E] px-4 border border-gray-800">
             <figure>

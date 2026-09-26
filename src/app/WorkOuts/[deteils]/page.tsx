@@ -1,8 +1,7 @@
 import DeteilsButton from "@/component/siteShare/DeteilsButton";
 import { IRootDataType } from "@/DataType";
 import Image from "next/image";
-import { useContext } from "react";
-import { FiBookmark, FiCalendar } from "react-icons/fi";
+
 
 interface paramsType {
   params: Promise<{ deteils: string }>;

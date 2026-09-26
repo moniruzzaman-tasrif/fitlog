@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { FaFire, FaRegStar } from "react-icons/fa";
 import { IoClose, IoTimeOutline } from "react-icons/io5";
 
-const SaveData = () => {
+const SaveData = ({ saveProps }: { saveProps:IRootDataType[]}) => {
   const contextData = useContext(dataContext);
 
   if (!contextData) return null;
@@ -23,7 +23,7 @@ const SaveData = () => {
 
   return (
     <div className=" flex flex-col gap-4">
-      {save.map(item => (
+      {saveProps.map(item => (
         <div className="" key={item.id}>
           <div className="card card-side  flex gap-4 items-center bg-[#14171E] px-4 border border-gray-800">
             <figure>
@@ -64,7 +64,7 @@ const SaveData = () => {
               </Link>
 
               <button
-                onClick={()=>remove(item)}
+                onClick={() => remove(item)}
                 className="btn  bg-[#14171E] text-gray-400 shadow-none border-none text-2xl"
               >
                 <IoClose />
