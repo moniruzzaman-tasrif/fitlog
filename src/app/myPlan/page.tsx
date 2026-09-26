@@ -9,7 +9,9 @@ import { FaFireAlt } from "react-icons/fa";
 import { FiActivity, FiArrowRight, FiClock } from "react-icons/fi";
 
 export default function MyPlanDashboard() {
-  const [activeTab, setActiveTab] = useState<"todays-plan" | "saved">("saved");
+  const [activeTab, setActiveTab] = useState<"todays-plan" | "saved">(
+    "todays-plan",
+  );
   const [shorby, setshortby] = useState<"Duration" | "Calories" | "Rating">(
     "Duration",
   );

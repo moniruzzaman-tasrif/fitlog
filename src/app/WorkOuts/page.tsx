@@ -7,7 +7,7 @@ import { HiOutlineClock } from "react-icons/hi";
 import { SlFire } from "react-icons/sl";
 
 const dataPromis = async (): Promise<IRootDataType[]> => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  const res = await fetch("https://api.api-store.workers.dev/api/fitlog");
   return res.json();
 };
 

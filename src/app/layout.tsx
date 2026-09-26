@@ -5,6 +5,7 @@ import Navber from "@/component/home/Navber";
 import ProviderContext from "@/context";
 import { ToastContainer } from "react-toastify";
 import Footer from "@/component/home/footer";
+import Loading from "@/loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

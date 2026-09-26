@@ -13,7 +13,7 @@ const page = async ({ params }: paramsType) => {
 
   const datafetch = async (): Promise<IRootDataType> => {
     const res = await fetch(
-      `https://api.abcz.workers.dev/api/fitlog/${deteils}`,
+      `https://api.api-store.workers.dev/api/fitlog/${deteils}`,
     );
     const data = await res.json();
     return data;
