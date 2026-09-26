@@ -35,7 +35,7 @@ const PlanData = ({ planProps }: { planProps: IRootDataType[] }) => {
     <div className="flex flex-col gap-4 w-full">
       {planProps.map(item => (
         <div className="w-full" key={item.id}>
-          <div className="card bg-[#14171E] p-4 border border-gray-800 rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full">
+          <div className="card bg-[#14171E] p-4 border border-gray-800 hover:border-[#e1fb809c] rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full md:w-auto">
               <figure className="relative w-full sm:w-45 h-40 sm:h-30 rounded-2xl overflow-hidden shrink-0">
                 <Image

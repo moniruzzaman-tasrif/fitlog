@@ -31,14 +31,14 @@ const HomePageData = async () => {
               key={data.id}
               className="w-full"
             >
-              <div className="card bg-[#151922] text-white shadow-xl rounded-3xl overflow-hidden border-2 border-gray-800/80 w-full h-full flex flex-col">
-                <figure className="px-4 pt-4">
-                  <div className="relative w-full h-48 sm:h-52 rounded-2xl overflow-hidden">
+              <div className="card bg-[#151922] text-white shadow-xl rounded-3xl overflow-hidden border-2 border-gray-800/80 w-full h-full flex flex-col hover:border-[#e1fb809c]">
+                <figure className="">
+                  <div className="relative w-full h-48 sm:h-60 rounded-tr-2xl overflow-hidden ">
                     <Image
                       src={data.image}
                       alt={data.name}
                       fill
-                      className="object-cover"
+                      className=" object-cover"
                     />
                   </div>
                 </figure>
