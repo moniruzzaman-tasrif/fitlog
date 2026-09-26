@@ -86,7 +86,7 @@ const Navber = () => {
               <Image
                 src={Logo}
                 alt="Logo"
-                className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                className="w-8 h-8 sm:w-8 sm:h-8 object-contain"
               />
               <span className="text-lg sm:text-xl font-black tracking-wider text-white">
                 FITLOG
